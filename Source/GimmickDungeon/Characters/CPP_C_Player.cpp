@@ -4,6 +4,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "./../Interfaces/CPP_I_Gimmick.h"
 #include "CPP_C_Player.h"
 
 ACPP_C_Player::ACPP_C_Player()
@@ -17,7 +18,7 @@ void ACPP_C_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		// Execution
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ACPP_C_Player::Interact);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ACPP_C_Player::Interact);
 	}
 }
 
@@ -43,7 +44,7 @@ float ACPP_C_Player::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
 
 void ACPP_C_Player::FocusChecker()
 {
-	// カメラからRange分伸びる座標を取得
+	// 画面中央にあるアクタを検出
 	FVector Start;
 	FRotator Rotation;
 	GetController()->GetPlayerViewPoint(Start, Rotation);
@@ -59,18 +60,23 @@ void ACPP_C_Player::FocusChecker()
 
 	if (LastFocusActor == HitActor) { return; }
 
-	LastFocusActor = HitActor;
-
-	if (LastFocusActor != nullptr)
+	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(HitActor))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FocusActor is %s"), *LastFocusActor->GetActorNameOrLabel());
+		GimmickActor->Focus();
 	}
-	
-	// Focus
 
-	// UnFocus
+	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
+	{
+		GimmickActor->UnFocus();
+	}
+
+	LastFocusActor = HitActor;
 }
 
 void ACPP_C_Player::Interact(const FInputActionValue& Value)
 {
+	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
+	{
+		GimmickActor->Interact(this);
+	}
 }

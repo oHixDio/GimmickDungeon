@@ -20,10 +20,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
 	class UInputAction* InteractAction = nullptr;
 
-	float FocusRange = 100.f;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input|State")
+	float FocusRange = 300.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player|Input|State")
 	AActor* LastFocusActor;
-	
+
 public:
 	ACPP_C_Player();
 
@@ -40,5 +41,5 @@ private:
 	void FocusChecker();
 
 protected:
-	void Interact(const FInputActionValue& Value );
+	void Interact(const FInputActionValue& Value);
 };
