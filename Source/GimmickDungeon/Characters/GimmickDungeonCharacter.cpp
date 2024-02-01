@@ -66,6 +66,11 @@ void AGimmickDungeonCharacter::BeginPlay()
 	}
 }
 
+float AGimmickDungeonCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
