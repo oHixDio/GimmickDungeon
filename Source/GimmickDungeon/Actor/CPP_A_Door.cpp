@@ -84,7 +84,7 @@ void ACPP_A_Door::Focus()
 void ACPP_A_Door::UnFocus()
 {
 	DoorMesh->SetRenderCustomDepth(false);
-	UE_LOG(LogTemp, Warning, TEXT("UnFocus"));
+	
 }
 
 void ACPP_A_Door::Interact(AActor* InteractActor)

@@ -16,7 +16,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Door|Components")
 	UStaticMeshComponent* DoorMesh = nullptr;
 	
-protected:
 	/// <summary>
 	/// 自身が開いている場合は真
 	/// </summary>
@@ -50,7 +49,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-public:
+protected:
 	UFUNCTION(BlueprintCallable)
 	void Open(AActor* InteractActor);
 	UFUNCTION(BlueprintCallable)
@@ -68,11 +67,9 @@ public:
 
 private:
 	/// <summary>
-	/// Openを実行したアクタがドアのY軸を基準に
-	/// プラスマイナスを算出し、ドアが開く方向を決めて返す。
+	/// 内積を使用し、Θの正負で扉が開く方向を定め、正負を返す。
 	/// </summary>
-	/// <returns>ドアが開く方向のスカラー値</returns>
-	UFUNCTION(BlueprintCallable, Blueprintpure)
+	/// <returns>ドアが開く方向の正負</returns>
 	float GetOpenDir(FVector InteractActorDir);
 
 public:
