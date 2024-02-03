@@ -17,7 +17,8 @@ private:
 	/// このアクタのStaticMeshを保持し、フォーカスに使用
 	/// BeginPlayにて配列に格納する
 	/// </summary>
-	TArray<UStaticMeshComponent*> MeshList;
+	// UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TArray<UPrimitiveComponent*> MeshList;
 
 protected:
 	/// <summary>

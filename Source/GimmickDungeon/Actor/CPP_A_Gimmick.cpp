@@ -15,13 +15,15 @@ ACPP_A_Gimmick::ACPP_A_Gimmick()
 void ACPP_A_Gimmick::BeginPlay()
 {
 	Super::BeginPlay();
-	TArray<UActorComponent*> CompList = GetComponentsByClass(UStaticMeshComponent::StaticClass());
+	TArray<UActorComponent*> CompList = GetComponentsByClass(UPrimitiveComponent::StaticClass());
 	for (UActorComponent* Comp : CompList)
 	{
-		UStaticMeshComponent* StaticMesh = Cast<UStaticMeshComponent>(Comp);
-		StaticMesh->SetRenderCustomDepth(false);
-		StaticMesh->SetCustomDepthStencilValue(1);
-		MeshList.Add(StaticMesh);
+		if (UPrimitiveComponent* Mesh = Cast<UPrimitiveComponent>(Comp))
+		{
+			Mesh->SetRenderCustomDepth(false);
+			Mesh->SetCustomDepthStencilValue(1);
+			MeshList.Add(Mesh);
+		}
 	}
 }
 
@@ -35,7 +37,7 @@ void ACPP_A_Gimmick::Tick(float DeltaTime)
 void ACPP_A_Gimmick::Focus()
 {
 	if (!bCanInteract) { return; }
-	for (UStaticMeshComponent* Mesh : MeshList)
+	for (UPrimitiveComponent* Mesh : MeshList)
 	{
 		Mesh->SetRenderCustomDepth(true);
 	}
@@ -44,7 +46,7 @@ void ACPP_A_Gimmick::Focus()
 void ACPP_A_Gimmick::UnFocus()
 {
 	
-	for (UStaticMeshComponent* Mesh : MeshList)
+	for (UPrimitiveComponent* Mesh : MeshList)
 	{
 		Mesh->SetRenderCustomDepth(false);
 	}
