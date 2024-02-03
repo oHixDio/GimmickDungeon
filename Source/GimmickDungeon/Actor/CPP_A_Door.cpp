@@ -7,9 +7,6 @@
 ACPP_A_Door::ACPP_A_Door()
 	:Super()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root Component"));
 	RootComponent = DoorMesh;
 	DoorMesh->SetRenderCustomDepth(false);
@@ -75,20 +72,9 @@ float ACPP_A_Door::GetOpenDir(FVector InteractActorDir)
 	return 1;
 }
 
-void ACPP_A_Door::Focus()
+bool ACPP_A_Door::Interact(AActor* InteractActor)
 {
-	DoorMesh->SetRenderCustomDepth(true);
-	UE_LOG(LogTemp, Warning, TEXT("Focus"));
-}
-
-void ACPP_A_Door::UnFocus()
-{
-	DoorMesh->SetRenderCustomDepth(false);
-	
-}
-
-void ACPP_A_Door::Interact(AActor* InteractActor)
-{
+	if (!Super::Interact(InteractActor)) { return false; }
 	if (!bIsOpen)
 	{
 		Open(InteractActor);
@@ -97,5 +83,6 @@ void ACPP_A_Door::Interact(AActor* InteractActor)
 	{
 		Close();
 	}
+	return true;
 }
 

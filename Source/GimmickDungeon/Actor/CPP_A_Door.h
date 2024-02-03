@@ -3,12 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "./../Interfaces/CPP_I_Gimmick.h"
-#include "GameFramework/Actor.h"
+#include "CPP_A_Gimmick.h"
 #include "CPP_A_Door.generated.h"
 
 UCLASS()
-class GIMMICKDUNGEON_API ACPP_A_Door : public AActor, public ICPP_I_Gimmick
+class GIMMICKDUNGEON_API ACPP_A_Door : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()
 
@@ -73,9 +72,7 @@ private:
 	float GetOpenDir(FVector InteractActorDir);
 
 public:
-	virtual void Focus() override;
 
-	virtual void UnFocus() override;
-
-	virtual void Interact(AActor* InteractActor) override;
+	UFUNCTION(BlueprintCallable)
+	virtual bool Interact(AActor* InteractActor) override;
 };

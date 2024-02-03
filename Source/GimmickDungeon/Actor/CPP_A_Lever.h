@@ -3,12 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "./../Interfaces/CPP_I_Gimmick.h"
-#include "GameFramework/Actor.h"
+#include "CPP_A_Gimmick.h"
 #include "CPP_A_Lever.generated.h"
 
+// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FJointGimmick);
+
 UCLASS()
-class GIMMICKDUNGEON_API ACPP_A_Lever : public AActor, public ICPP_I_Gimmick
+class GIMMICKDUNGEON_API ACPP_A_Lever : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()
 
@@ -54,13 +55,12 @@ protected:
 	void Pull(AActor* InteractActor);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void PullEvent();
+
+	void PullEndEvent();
 	
 private:
 	bool IsPulled();
 
 public:
-	void Focus() override;
-	void UnFocus() override;
-	void Interact(AActor* InteractActor) override;
-
+	bool Interact(AActor* InteractActor) override;
 };

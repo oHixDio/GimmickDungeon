@@ -11,6 +11,7 @@ UINTERFACE(MinimalAPI)
 class UCPP_I_Gimmick : public UInterface
 {
 	GENERATED_BODY()
+
 };
 
 /**
@@ -26,5 +27,5 @@ public:
 
 	virtual void UnFocus() {}
 
-	virtual void Interact(AActor* InteractActor) {}
+	virtual bool Interact(AActor* InteractActor) { return true; }
 };

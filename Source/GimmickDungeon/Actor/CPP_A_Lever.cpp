@@ -6,10 +6,8 @@
 
 // Sets default values
 ACPP_A_Lever::ACPP_A_Lever()
+	:Super()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	LeverFrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root Mesh"));
 	RootComponent = LeverFrameMesh;
 
@@ -54,6 +52,7 @@ void ACPP_A_Lever::Tick(float DeltaTime)
 		{
 			bSholudCountPullMoveTimer = false;
 			PullMoveElapsedTimer = 0.f;
+			PullEndEvent();
 		}
 	}
 
@@ -69,23 +68,21 @@ void ACPP_A_Lever::Pull(AActor* InteractActor)
 	PullEvent();
 }
 
+void ACPP_A_Lever::PullEndEvent()
+{
+	OnJointGimmick.Broadcast();
+}
+
 bool ACPP_A_Lever::IsPulled()
 {
 	return false;
 }
 
-void ACPP_A_Lever::Focus()
+bool ACPP_A_Lever::Interact(AActor* InteractActor)
 {
-	LeverMesh->SetRenderCustomDepth(true);
-}
+	if (!Super::Interact(InteractActor)) { return false; }
 
-void ACPP_A_Lever::UnFocus()
-{
-	LeverMesh->SetRenderCustomDepth(false);
-}
-
-void ACPP_A_Lever::Interact(AActor* InteractActor)
-{
 	Pull(InteractActor);
-}
 
+	return true;
+}
