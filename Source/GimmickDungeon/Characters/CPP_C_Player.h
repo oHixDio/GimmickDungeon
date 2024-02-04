@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class GIMMICKDUNGEON_API ACPP_C_Player : public AGimmickDungeonCharacter
 {
 	GENERATED_BODY()
@@ -20,10 +20,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
 	class UInputAction* InteractAction = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	class UInputAction* PickupAction = nullptr;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input|State")
 	float FocusRange = 300.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player|Input|State")
-	AActor* LastFocusActor;
+	AActor* LastFocusActor = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player|Input|State")
+	TArray<AActor*> FounndItemActorList;
+
+private:
+	bool bFocusGimmick = false;
 
 public:
 	ACPP_C_Player();
@@ -42,4 +52,12 @@ private:
 
 protected:
 	void Interact(const FInputActionValue& Value);
+
+	void Pickup(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

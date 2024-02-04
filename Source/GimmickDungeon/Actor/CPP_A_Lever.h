@@ -8,7 +8,7 @@
 
 // DECLARE_DYNAMIC_MULTICAST_DELEGATE(FJointGimmick);
 
-UCLASS()
+UCLASS(Blueprintable)
 class GIMMICKDUNGEON_API ACPP_A_Lever : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()

@@ -6,7 +6,7 @@
 #include "CPP_A_Gimmick.h"
 #include "CPP_A_DestructBase.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class GIMMICKDUNGEON_API ACPP_A_DestructBase : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()

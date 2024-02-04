@@ -6,7 +6,7 @@
 #include "CPP_A_Gimmick.h"
 #include "CPP_A_Door.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class GIMMICKDUNGEON_API ACPP_A_Door : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()
