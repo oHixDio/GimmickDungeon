@@ -13,8 +13,6 @@ ACPP_A_Lever::ACPP_A_Lever()
 
 	LeverMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	LeverMesh->SetupAttachment(RootComponent);
-	LeverMesh->SetRenderCustomDepth(false);
-	LeverMesh->SetCustomDepthStencilValue(1);
 }
 
 // Called when the game starts or when spawned

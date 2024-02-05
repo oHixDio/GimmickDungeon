@@ -4,29 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "CPP_A_Gimmick.h"
-#include "CPP_A_DestructBase.generated.h"
+#include "CPP_A_RoomChangeDoor.generated.h"
 
-UCLASS(Blueprintable)
-class GIMMICKDUNGEON_API ACPP_A_DestructBase : public ACPP_A_Gimmick
+UCLASS()
+class GIMMICKDUNGEON_API ACPP_A_RoomChangeDoor : public ACPP_A_Gimmick
 {
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> FieldSystem;
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> ItemBase;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RoomChangeDoor|Components")
+	UStaticMeshComponent* RoomChangeDoorMesh = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "RoomChangeDoor")
+	TSoftObjectPtr<UWorld> LoadLevel;
 	
-
-private:
-	bool bDestructed = false;
-	float SmallStartTimer = 0.5f;
-	float SmallStartElapsedTime = 0.f;
-	float SmallElapsedTime = 0.f;
-
 public:	
 	// Sets default values for this actor's properties
-	ACPP_A_DestructBase();
+	ACPP_A_RoomChangeDoor();
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,10 +30,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	void DebrisSmaller(float DeltaTime);
-
 public:
 	bool Interact(AActor* InteractActor) override;
-
 };

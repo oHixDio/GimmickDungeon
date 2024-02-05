@@ -61,8 +61,7 @@ void ACPP_C_Player::FocusChecker()
 	FCollisionShape Sphere = FCollisionShape::MakeSphere(5.f);
 	FCollisionQueryParams Param;
 	Param.AddIgnoredActor(this);
-	// コリジョンチャンネルがGimmickであるアクタにしかヒットしない。
-	bool HasHit = GetWorld()->SweepSingleByChannel(HitResult,Start,End,FQuat::Identity, ECC_GameTraceChannel1, Sphere, Param);
+	bool HasHit = GetWorld()->SweepSingleByChannel(HitResult,Start,End,FQuat::Identity, ECC_Visibility, Sphere, Param);
 
 	// Hitしない場合
 	if (!HasHit) 
@@ -74,11 +73,9 @@ void ACPP_C_Player::FocusChecker()
 			{
 				GimmickActor->UnFocus();
 			}
+			bFocusGimmick = false;
 		}
-
 		LastFocusActor = nullptr;
-		bFocusGimmick = false;
-
 		return; 
 	}
 
@@ -86,6 +83,16 @@ void ACPP_C_Player::FocusChecker()
 	if (HitResult.GetActor() == LastFocusActor) { return; }
 
 	// ↓↓ 新しく検出したアクタ ↓↓ //
+
+	// アウトライン非表示
+	if (LastFocusActor != nullptr)
+	{
+		if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
+		{
+			GimmickActor->UnFocus();
+		}
+		bFocusGimmick = false;
+	}
 
 	// Hitしたアクタを保持
 	LastFocusActor = HitResult.GetActor();
@@ -96,7 +103,6 @@ void ACPP_C_Player::FocusChecker()
 		GimmickActor->Focus();
 		bFocusGimmick = true;
 	}
-
 }
 
 void ACPP_C_Player::Interact(const FInputActionValue& Value)

@@ -9,8 +9,6 @@ ACPP_A_Door::ACPP_A_Door()
 {
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root Component"));
 	RootComponent = DoorMesh;
-	DoorMesh->SetRenderCustomDepth(false);
-	DoorMesh->SetCustomDepthStencilValue(1);
 }
 
 // Called when the game starts or when spawned

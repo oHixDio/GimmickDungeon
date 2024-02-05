@@ -51,8 +51,20 @@ bool ACPP_A_DestructBase::Interact(AActor* InteractActor)
 {
 	if (!Super::Interact(InteractActor)) { return false; }
 	if (bDestructed) { return false; }
+
 	GetWorld()->SpawnActor<AActor>(FieldSystem, GetActorLocation(), FRotator::ZeroRotator);
 
+	UActorComponent* Mesh = GetComponentByClass(UPrimitiveComponent::StaticClass());
+	if (UPrimitiveComponent* PrimitiveMesh = Cast<UPrimitiveComponent>(Mesh))
+	{
+		PrimitiveMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	
+	if (ItemBase != nullptr)
+	{
+		GetWorld()->SpawnActor<AActor>(ItemBase, GetActorLocation(), FRotator::ZeroRotator);
+	}
+	
 	bDestructed = true;
 
 

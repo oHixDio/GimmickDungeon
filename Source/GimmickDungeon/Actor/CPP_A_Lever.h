@@ -15,10 +15,10 @@ class GIMMICKDUNGEON_API ACPP_A_Lever : public ACPP_A_Gimmick
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lever|Components")
-	UStaticMeshComponent* LeverMesh;
+	UStaticMeshComponent* LeverMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lever|Components")
-	UStaticMeshComponent* LeverFrameMesh;
+	UStaticMeshComponent* LeverFrameMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lever|State")
 	bool bIsPulled = false;
