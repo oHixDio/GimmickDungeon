@@ -49,35 +49,54 @@ float ACPP_C_Player::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
 
 void ACPP_C_Player::FocusChecker()
 {
-	// 画面中央にあるアクタを検出
+	// 画面中央の座標取得
 	FVector Start;
 	FRotator Rotation;
 	GetController()->GetPlayerViewPoint(Start, Rotation);
 	Start = Start + Rotation.Vector() * CameraBoom->TargetArmLength;
 	FVector End = Start + Rotation.Vector() * FocusRange;
 
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red);
-
+	// 画面中央にあるアクタを検出
 	FHitResult HitResult;
-	GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_GameTraceChannel1);
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(5.f);
+	FCollisionQueryParams Param;
+	Param.AddIgnoredActor(this);
+	// コリジョンチャンネルがGimmickであるアクタにしかヒットしない。
+	bool HasHit = GetWorld()->SweepSingleByChannel(HitResult,Start,End,FQuat::Identity, ECC_GameTraceChannel1, Sphere, Param);
 
-	AActor* HitActor = HitResult.GetActor();
+	// Hitしない場合
+	if (!HasHit) 
+	{
+		// アウトライン非表示
+		if (LastFocusActor != nullptr)
+		{
+			if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
+			{
+				GimmickActor->UnFocus();
+			}
+		}
 
-	if (LastFocusActor == HitActor) { return; }
+		LastFocusActor = nullptr;
+		bFocusGimmick = false;
 
-	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(HitActor))
+		return; 
+	}
+
+	// Hitしたのが前回と同じアクタの場合
+	if (HitResult.GetActor() == LastFocusActor) { return; }
+
+	// ↓↓ 新しく検出したアクタ ↓↓ //
+
+	// Hitしたアクタを保持
+	LastFocusActor = HitResult.GetActor();
+	
+	// アウトライン表示
+	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
 	{
 		GimmickActor->Focus();
 		bFocusGimmick = true;
 	}
 
-	if (ICPP_I_Gimmick* GimmickActor = Cast<ICPP_I_Gimmick>(LastFocusActor))
-	{
-		GimmickActor->UnFocus();
-		bFocusGimmick = false;
-	}
-
-	LastFocusActor = HitActor;
 }
 
 void ACPP_C_Player::Interact(const FInputActionValue& Value)

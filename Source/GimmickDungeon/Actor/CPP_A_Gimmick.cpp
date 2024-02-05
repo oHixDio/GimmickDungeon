@@ -9,12 +9,14 @@ ACPP_A_Gimmick::ACPP_A_Gimmick()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 // Called when the game starts or when spawned
 void ACPP_A_Gimmick::BeginPlay()
 {
 	Super::BeginPlay();
+	// 全てのMeshコンポーネントを取得
 	TArray<UActorComponent*> CompList = GetComponentsByClass(UPrimitiveComponent::StaticClass());
 	for (UActorComponent* Comp : CompList)
 	{
