@@ -74,15 +74,13 @@ void UCPP_AC_Interactable::PerformInteractionCheck()
 			// HitしたActorにInteractInterfaceが実装されているならば
 			if (HitActor->GetClass()->ImplementsInterface(UCPP_I_Interact::StaticClass()))
 			{
-				const float Distance = (Start - HitResult.ImpactPoint).Size();
-
-				if (HitActor != InteractionData.CurrentInteractableActor && Distance <= InteractionCheckDistance)
+				if (HitActor != InteractionData.CurrentInteractableActor)
 				{
 					FoundInteractable(HitActor);
 					return;
 				}
 
-				if (HitActor != InteractionData.CurrentInteractableActor)
+				if (HitActor == InteractionData.CurrentInteractableActor)
 				{
 					return;
 				}
@@ -93,24 +91,94 @@ void UCPP_AC_Interactable::PerformInteractionCheck()
 	NoInteractableFound();
 }
 
-void UCPP_AC_Interactable::FoundInteractable(AActor* newInteractable)
+void UCPP_AC_Interactable::FoundInteractable(AActor* NewInteractableActor)
 {
+	if (IsInteracting())
+	{
+		EndInteract();
+	}
+
+	if (InteractionData.CurrentInteractableActor)
+	{
+		TargetInteractableActor = InteractionData.CurrentInteractableActor;
+		TargetInteractableActor->EndFocus();
+	}
+
+	InteractionData.CurrentInteractableActor = NewInteractableActor;
+	TargetInteractableActor = NewInteractableActor;
+
+	TargetInteractableActor->BeginFocus();
 }
 
 void UCPP_AC_Interactable::NoInteractableFound()
 {
+	if (IsInteracting())
+	{
+		GetWorld()->GetTimerManager().ClearTimer(InteractionTimerHandle);
+	}
+
+	if (InteractionData.CurrentInteractableActor)
+	{
+		if (IsValid(TargetInteractableActor.GetObject()))
+		{
+			TargetInteractableActor->EndFocus();
+		}
+
+		// Insert hide widget
+
+		InteractionData.CurrentInteractableActor = nullptr;
+		TargetInteractableActor = nullptr;
+	}
 }
 
 void UCPP_AC_Interactable::BeginInteract()
 {
+	// フェイルセーフ
+	PerformInteractionCheck();
+
+	if (InteractionData.CurrentInteractableActor)
+	{
+		if (IsValid(TargetInteractableActor.GetObject()))
+		{
+			TargetInteractableActor->BeginInteract();
+
+			if (FMath::IsNearlyZero(TargetInteractableActor->InteractableData.InteractableDuration, 0.1f))
+			{
+				Interact();
+			}
+			else
+			{
+				GetWorld()->GetTimerManager().SetTimer
+				(
+					InteractionTimerHandle,
+					this,
+					&UCPP_AC_Interactable::Interact,
+					TargetInteractableActor->InteractableData.InteractableDuration,
+					false
+				);
+			}
+		}
+	}
 }
 
 void UCPP_AC_Interactable::Interact()
 {
+	GetWorld()->GetTimerManager().ClearTimer(InteractionTimerHandle);
+
+	if (IsValid(TargetInteractableActor.GetObject()))
+	{
+		TargetInteractableActor->Interact();
+	}
 }
 
 void UCPP_AC_Interactable::EndInteract()
 {
+	GetWorld()->GetTimerManager().ClearTimer(InteractionTimerHandle);
+
+	if (IsValid(TargetInteractableActor.GetObject()))
+	{
+		TargetInteractableActor->EndInteract();
+	}
 }
 
 

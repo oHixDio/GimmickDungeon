@@ -3,77 +3,43 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
-#include "CPP_AC_Interactable.generated.h"
+#include "GameFramework/Actor.h"
+#include "../Interfaces/CPP_I_Interact.h"
+#include "CPP_A_InteractBase.generated.h"
 
-USTRUCT()
-struct FInteractionData
-{
-	GENERATED_USTRUCT_BODY()
-
-	FInteractionData() : CurrentInteractableActor(nullptr), LastInteractionCheckTime(0.0f)
-	{
-
-	};
-
-	UPROPERTY()
-	AActor* CurrentInteractableActor;
-
-	UPROPERTY()
-	float LastInteractionCheckTime;
-};
-
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class GIMMICKDUNGEON_API UCPP_AC_Interactable : public UActorComponent
+UCLASS()
+class GIMMICKDUNGEON_API ACPP_A_InteractBase : public AActor, public ICPP_I_Interact
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	//====================================================================================================================================================================================
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
-	float FieldOfVision{0.0f};
-
-
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* Mesh{ nullptr };
+	
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
-	UCPP_AC_Interactable();
-
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	FORCEINLINE bool IsInteracting() const { return GetWorld()->GetTimerManager().IsTimerActive(InteractionTimerHandle); }
-
-	void BeginInteract();
-	void EndInteract();
+	ACPP_A_InteractBase();
 
 protected:
-	//====================================================================================================================================================================================
-	// PROPERTIES & VARIABLES
-	//====================================================================================================================================================================================
-	APawn* Owner;
-
-	UPROPERTY(VisibleAnywhere, Category = "Character | Intertaction")
-	TScriptInterface<class ICPP_I_Interact> TargetInteractableActor;
-
-	float InteractionCheckFrequency{ 0.0f };
-
-	float InteractionCheckDistance{ 1.0f };
-
-	bool bShouldInteractionCheck{ false };
-
-	FTimerHandle InteractionTimerHandle;
-	
-	FInteractionData InteractionData;
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
 	virtual void BeginPlay() override;
 
-	void PerformInteractionCheck();
-	void FoundInteractable(AActor* NewInteractableActor);
-	void NoInteractableFound();
-	// ICPP_I_InteractÇ∆ÇÕà·Ç§ÉÅÉ\ÉbÉh
+	void BeginInteract();
 	void Interact();
+	void EndInteract();
+	void BeginFocus();
+	void EndFocus();
+
+public:
+	//====================================================================================================================================================================================
+	// FUNCTIONS
+	//====================================================================================================================================================================================
+	virtual void Tick(float DeltaTime) override;
+
 };
