@@ -3,12 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "../Interfaces/CPP_I_Interact.h"
-#include "CPP_A_InteractBase.generated.h"
+#include "GameFramework/HUD.h"
+#include "CPP_HUD_Player.generated.h"
 
+
+class UCPP_UW_PlayerScreen;
+class UCPP_UW_InteractGuide;
+/**
+ * 
+ */
 UCLASS()
-class GIMMICKDUNGEON_API ACPP_A_InteractBase : public AActor, public ICPP_I_Interact
+class GIMMICKDUNGEON_API ACPP_HUD_Player : public AHUD
 {
 	GENERATED_BODY()
 
@@ -16,33 +21,36 @@ public:
 	//====================================================================================================================================================================================
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* Mesh{ nullptr };
+	UPROPERTY(EditDefaultsOnly, Category = "Character | Widgets")
+	TSubclassOf<UCPP_UW_PlayerScreen> PlayerScreenClass;
 
-	UPROPERTY(EditInstanceOnly, Category = "Interact Base")
-	FInteractableData InstanceInteractableData;
-	
+	UPROPERTY(EditDefaultsOnly, Category = "Character | Widgets")
+	TSubclassOf<UCPP_UW_InteractGuide> InteractGuideClass;
+
+	bool bIsPlayerScreenVisible;
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
-	ACPP_A_InteractBase();
+	ACPP_HUD_Player();
+
+	void DisplayPlayerScreen();
+	void HidePlayerScreen();
+
+	void ShowInteractGuide();
+	void HideInteractGuide();
+	void UpdateInteractGuide(const struct FInteractableData& InteractableData);
 
 protected:
+	//====================================================================================================================================================================================
+	// PROPERTIES & VARIABLES
+	//====================================================================================================================================================================================
+	UPROPERTY()
+	UCPP_UW_PlayerScreen* PlayerScreenWidget;
+
+	UPROPERTY()
+	UCPP_UW_InteractGuide* InteractGuideWidget;
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
 	virtual void BeginPlay() override;
-
-	void BeginInteract();
-	void Interact();
-	void EndInteract();
-	void BeginFocus();
-	void EndFocus();
-
-public:
-	//====================================================================================================================================================================================
-	// FUNCTIONS
-	//====================================================================================================================================================================================
-	virtual void Tick(float DeltaTime) override;
-
 };

@@ -22,7 +22,8 @@ struct FInteractableData
 	FInteractableData():
 	InteractableType(EInteractableType::Pickup),
 	Name(FText::GetEmpty()),
-	Action(FText::GetEmpty()),
+	ActionVerb(FText::GetEmpty()),
+	ActionIcon(nullptr),
 	Quantity(0),
 	InteractableDuration(0.0f)
 	{
@@ -36,7 +37,10 @@ struct FInteractableData
 	FText Name;
 
 	UPROPERTY(EditInstanceOnly)
-	FText Action;
+	FText ActionVerb;
+
+	UPROPERTY(EditInstanceOnly)
+	UTexture2D*  ActionIcon;
 
 	UPROPERTY(EditInstanceOnly)
 	int32 Quantity;

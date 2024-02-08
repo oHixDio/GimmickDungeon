@@ -16,6 +16,7 @@ void ACPP_A_InteractBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	InstanceInteractableData = InstanceInteractableData;
 }
 
 void ACPP_A_InteractBase::Tick(float DeltaTime)
