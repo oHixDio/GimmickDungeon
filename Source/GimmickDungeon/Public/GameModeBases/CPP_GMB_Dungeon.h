@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "./GimmickDungeonGameMode.h"
+#include "GimmickDungeonGameMode.h"
 #include "CPP_GMB_Dungeon.generated.h"
 
 /**

@@ -2,7 +2,7 @@
 
 
 #include <Kismet/GameplayStatics.h>
-#include "CPP_A_RoomChangeDoor.h"
+#include "Actors/CPP_A_RoomChangeDoor.h"
 
 // Sets default values
 ACPP_A_RoomChangeDoor::ACPP_A_RoomChangeDoor()

@@ -5,9 +5,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "./../Interfaces/CPP_I_Gimmick.h"
-#include "./../Interfaces/CPP_I_Item.h"
-#include "CPP_C_Player.h"
+#include "Interfaces/CPP_I_Gimmick.h"
+#include "Interfaces/CPP_I_Item.h"
+#include "Characters/CPP_C_Player.h"
 
 ACPP_C_Player::ACPP_C_Player()
 	:Super()

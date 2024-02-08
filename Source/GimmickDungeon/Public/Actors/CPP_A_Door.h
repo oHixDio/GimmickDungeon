@@ -48,6 +48,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	FORCEINLINE bool GetIsOpen() { return bIsOpen; }
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void Open(AActor* InteractActor);

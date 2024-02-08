@@ -3,7 +3,7 @@
 #include <Components/SphereComponent.h>
 #include "NiagaraFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "CPP_A_ItemBase.h"
+#include "Actors/CPP_A_ItemBase.h"
 
 // Sets default values
 ACPP_A_ItemBase::ACPP_A_ItemBase()

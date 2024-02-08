@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CPP_A_Gimmick.h"
+#include "Actors/CPP_A_Gimmick.h"
 
 // Sets default values
 ACPP_A_Gimmick::ACPP_A_Gimmick()

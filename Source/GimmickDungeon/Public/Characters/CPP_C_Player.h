@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "./GimmickDungeonCharacter.h"
+#include "GimmickDungeonCharacter.h"
 #include "InputActionValue.h"
 #include "CPP_C_Player.generated.h"
 
