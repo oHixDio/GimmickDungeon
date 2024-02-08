@@ -12,6 +12,7 @@
 ACPP_C_Player::ACPP_C_Player()
 	:Super()
 {
+	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ACPP_C_Player::OnOverlapBegin);
 	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &ACPP_C_Player::OnOverlapEnd);
 }
@@ -30,6 +31,8 @@ void ACPP_C_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void ACPP_C_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BaseEyeHeight = CameraBoom->GetRelativeLocation().Z;
 }
 
 void ACPP_C_Player::Tick(float DeltaTime)
