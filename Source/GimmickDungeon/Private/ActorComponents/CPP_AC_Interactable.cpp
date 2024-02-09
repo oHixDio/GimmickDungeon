@@ -2,6 +2,7 @@
 
 
 #include "Interfaces/CPP_I_Interact.h"
+#include "UserInterfaces/CPP_HUD_Player.h"
 #include "ActorComponents/CPP_AC_Interactable.h"
 
 #include "DrawDebugHelpers.h"
@@ -20,6 +21,8 @@ void UCPP_AC_Interactable::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
+
 	// OwnerのアクターがPawnではないとき、このコンポーネントを削除する。
 	if (!Cast<APawn>(GetOwner()))
 	{
@@ -28,6 +31,7 @@ void UCPP_AC_Interactable::BeginPlay()
 	else
 	{
 		Owner = Cast<APawn>(GetOwner());
+		HUD = Cast<ACPP_HUD_Player>(GetWorld()->GetFirstPlayerController()->GetHUD());
 		bShouldInteractionCheck = true;
 	}
 }
@@ -107,6 +111,8 @@ void UCPP_AC_Interactable::FoundInteractable(AActor* NewInteractableActor)
 	InteractionData.CurrentInteractableActor = NewInteractableActor;
 	TargetInteractableActor = NewInteractableActor;
 
+	HUD->UpdateInteractGuide(&TargetInteractableActor->InteractableData);
+
 	TargetInteractableActor->BeginFocus();
 }
 
@@ -124,7 +130,7 @@ void UCPP_AC_Interactable::NoInteractableFound()
 			TargetInteractableActor->EndFocus();
 		}
 
-		// Insert hide widget
+		HUD->HideInteractGuide();
 
 		InteractionData.CurrentInteractableActor = nullptr;
 		TargetInteractableActor = nullptr;

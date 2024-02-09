@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "CPP_AC_Interactable.generated.h"
 
+class ACPP_HUD_Player;
+
 USTRUCT()
 struct FInteractionData
 {
@@ -53,6 +55,7 @@ protected:
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
 	APawn* Owner;
+	ACPP_HUD_Player* HUD;
 
 	UPROPERTY(VisibleAnywhere, Category = "Character | Intertaction")
 	TScriptInterface<class ICPP_I_Interact> TargetInteractableActor;

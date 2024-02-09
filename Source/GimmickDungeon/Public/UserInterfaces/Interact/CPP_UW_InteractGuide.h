@@ -18,7 +18,7 @@ class GIMMICKDUNGEON_API UCPP_UW_InteractGuide : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	void UpdateWidget(const struct FInteractableData& InteractableData);
+	void UpdateWidget(const struct FInteractableData* InteractableData) const;
 
 protected:
 	//====================================================================================================================================================================================
@@ -28,13 +28,10 @@ protected:
 	UTextBlock* NameText;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
-	UTextBlock* ActionVerbText;
+	UTextBlock* ActionText;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
 	UTextBlock* QuantityText;
-
-	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
-	UTexture2D* ActionIcon;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
 	UProgressBar* InteractionProgressBar;

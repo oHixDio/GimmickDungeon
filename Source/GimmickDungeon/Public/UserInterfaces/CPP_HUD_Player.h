@@ -36,9 +36,9 @@ public:
 	void DisplayPlayerScreen();
 	void HidePlayerScreen();
 
-	void ShowInteractGuide();
-	void HideInteractGuide();
-	void UpdateInteractGuide(const struct FInteractableData& InteractableData);
+	void ShowInteractGuide() const;
+	void HideInteractGuide() const;
+	void UpdateInteractGuide(const struct FInteractableData* InteractableData) const;
 
 protected:
 	//====================================================================================================================================================================================

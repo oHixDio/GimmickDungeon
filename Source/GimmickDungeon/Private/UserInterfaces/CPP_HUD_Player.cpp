@@ -46,7 +46,7 @@ void ACPP_HUD_Player::HidePlayerScreen()
 	}
 }
 
-void ACPP_HUD_Player::ShowInteractGuide()
+void ACPP_HUD_Player::ShowInteractGuide() const
 {
 	if (InteractGuideWidget)
 	{
@@ -54,7 +54,7 @@ void ACPP_HUD_Player::ShowInteractGuide()
 	}
 }
 
-void ACPP_HUD_Player::HideInteractGuide()
+void ACPP_HUD_Player::HideInteractGuide() const
 {
 	if (InteractGuideWidget)
 	{
@@ -62,7 +62,7 @@ void ACPP_HUD_Player::HideInteractGuide()
 	}
 }
 
-void ACPP_HUD_Player::UpdateInteractGuide(const FInteractableData& InteractableData)
+void ACPP_HUD_Player::UpdateInteractGuide(const FInteractableData* InteractableData) const
 {
 	if (InteractGuideWidget)
 	{
@@ -71,7 +71,7 @@ void ACPP_HUD_Player::UpdateInteractGuide(const FInteractableData& InteractableD
 			InteractGuideWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 
-		// InteractGuideWidget->UpdateWidget(InteractableData);
+		InteractGuideWidget->UpdateWidget(InteractableData);
 	}
 }
 
