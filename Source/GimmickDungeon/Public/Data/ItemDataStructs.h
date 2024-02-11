@@ -4,11 +4,14 @@
 #include "Engine/DataTable.h"
 #include "ItemDataStructs.generated.h"
 
+/*
+* 修正項目なし
+*/
+
 UENUM()
 enum class EItemQuality : uint8
 {
 	Common UMETA(DisplayName = "Common"),
-	UnCommon UMETA(DisplayName = "UnCommon"),
 	Rare UMETA(DisplayName = "Rare"),
 	SuperRare UMETA(DisplayName = "SuperRare"),
 	Masterwork UMETA(DisplayName = "Masterwork"),
@@ -17,12 +20,13 @@ enum class EItemQuality : uint8
 UENUM()
 enum class EItemType : uint8
 {
-	Gold UMETA(DisplayName = "Common"),
-	Gimmick UMETA(DisplayName = "UnCommon"),
-	Material UMETA(DisplayName = "Rare"),
-	Consumable UMETA(DisplayName = "SuperRare"),
+	Gold UMETA(DisplayName = "Gold"),
+	Gimmick UMETA(DisplayName = "Gimmick"),
+	Material UMETA(DisplayName = "Material"),
+	Consumable UMETA(DisplayName = "Consumable"),
 };
 
+// 未使用
 USTRUCT()
 struct FItemStatistics
 {
@@ -50,7 +54,7 @@ struct FItemTextData
 	FText InteractionText;
 
 	UPROPERTY(EditAnywhere)
-	FText UsageText;
+	FText UsageText; // 未使用
 };
 
 USTRUCT()
@@ -59,7 +63,7 @@ struct FItemNumericData
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-	float Weight;
+	float Weight; // 不使用
 
 	UPROPERTY(EditAnywhere)
 	int32 MaxStackSize;
@@ -74,10 +78,16 @@ struct FItemAssetData
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-	UTexture2D* Icon;
+	UTexture2D* InventoryIcon;
 
 	UPROPERTY(EditAnywhere)
-	UStaticMesh* Mesh;
+	UStaticMesh* Mesh; // 不使用
+
+	UPROPERTY(EditAnywhere)
+	class UNiagaraSystem* ItemEffect;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> SpawnableClass;
 };
 
 USTRUCT()
@@ -93,9 +103,6 @@ struct FItemData : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
 	EItemQuality ItemQuality;
-
-	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FItemStatistics ItemStatistics;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
 	FItemTextData ItemTextData;
