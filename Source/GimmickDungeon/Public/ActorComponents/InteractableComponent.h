@@ -21,6 +21,7 @@ struct FInteractableData
 };
 
 class IInteractInterface;
+class APlayerHUD;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GIMMICKDUNGEON_API UInteractableComponent : public UActorComponent
@@ -31,8 +32,6 @@ public:
 	//====================================================================================================================================================================================
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
-	UPROPERTY(VisibleAnywhere)
-	FInteractableData InteractionData;
 
 	//====================================================================================================================================================================================
 	// FUNCTIONS
@@ -51,6 +50,7 @@ protected:
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
 	APawn* Owner;
+	APlayerHUD* HUD;
 
 	UPROPERTY(VisibleAnywhere, Category = "Character | Intertaction")
 	TScriptInterface<IInteractInterface> TargetInteractableActor;
@@ -63,6 +63,8 @@ protected:
 
 	FTimerHandle InteractionTimerHandle;
 	
+	UPROPERTY(VisibleAnywhere)
+	FInteractableData InteractionData;
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================

@@ -9,6 +9,7 @@
 
 class UTextBlock;
 class UProgressBar;
+class UImage;
 /**
  * 
  */
@@ -29,7 +30,7 @@ protected:
 	UTextBlock* NameText;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
-	UTextBlock* ActionText;
+	UImage* InputIcon;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "Interaction Widget | Interactable Data")
 	UTextBlock* QuantityText;

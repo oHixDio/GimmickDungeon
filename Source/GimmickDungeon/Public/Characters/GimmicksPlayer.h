@@ -7,6 +7,9 @@
 #include "InputActionValue.h"
 #include "GimmicksPlayer.generated.h"
 
+
+class UInputAction;
+
 /**
  * 
  */
@@ -36,13 +39,31 @@ protected:
 	//==========================================================================================
 	// Components
 	//==========================================================================================
-	UPROPERTY(EditAnywhere)
-	class UInteractableComponent* InteractableComp{ nullptr };
+	UPROPERTY(EditAnywhere, Category = "Character | Component")
+	class UInteractableComponent* Interactable{ nullptr };
+
+	UPROPERTY(EditAnywhere, Category = "Character | Component")
+	class UInventoryComponent* Inventory{ nullptr };
 	//==========================================================================================
 	// Assets
 	//==========================================================================================
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
-	class UInputAction* InteractAction = nullptr;
+	UInputAction* InteractAction = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	UInputAction* InventoryScrollAction{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	UInputAction* InventoryOneAction{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	UInputAction* InventoryTwoAction{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	UInputAction* InventoryThreeAction{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player|Input")
+	UInputAction* InventoryFourAction{ nullptr };
 
 	//==========================================================================================
 	// Others

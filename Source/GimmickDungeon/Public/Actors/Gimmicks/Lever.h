@@ -3,46 +3,67 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "../Interfaces/InteractInterface.h"
-#include "InteractableBase.generated.h"
+#include "Actors/GimmickBase.h"
+#include "Lever.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class GIMMICKDUNGEON_API AInteractableBase : public AActor, public IInteractInterface
+class GIMMICKDUNGEON_API ALever : public AGimmickBase
 {
 	GENERATED_BODY()
-	
+
 public:
-	//====================================================================================================================================================================================
-	// PROPERTIES & VARIABLES
-	//====================================================================================================================================================================================
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* Mesh{ nullptr };
-
-	UPROPERTY(EditInstanceOnly, Category = "Interact Base")
-	FInteractData InstanceInteractData;
-
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
-	AInteractableBase();
+	ALever();
+	virtual void Tick(float DeltaTime) override;
+
+	void Interact(AActor* InteractableActor) override;
 
 protected:
+	//====================================================================================================================================================================================
+	// PROPERTIES & VARIABLES
+	//====================================================================================================================================================================================
+	UPROPERTY(EditAnywhere, Category = "Lever|Components")
+	UStaticMeshComponent* LeverMesh = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = "Lever|Components")
+	UStaticMeshComponent* LeverFrameMesh = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = "Lever|State")
+	float PullMoveTimer = 1.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Lever|State")
+	bool bIsPulled = false;
+
+	UPROPERTY(VisibleAnywhere, Category = "Lever|State")
+	bool bSholudCountPullMoveTimer = false;
+
+	UPROPERTY(VisibleAnywhere, Category = "Lever|State")
+	FRotator CurRotate;
+
+	UPROPERTY(VisibleAnywhere, Category = "Lever|State")
+	float PullMoveElapsedTimer = 0.f;
+
+	const float PULL_SCALE = 60.f;
+
+
 	//====================================================================================================================================================================================
 	// FUNCTIONS
 	//====================================================================================================================================================================================
 	virtual void BeginPlay() override;
 
-	virtual void BeginInteract() override;
-	virtual void Interact(AActor* InteractableActor) override;
-	virtual void EndInteract() override;
-	virtual void BeginFocus() override;
-	virtual void EndFocus() override;
+	UFUNCTION(BlueprintCallable)
+	void Pull(AActor* InteractableActor);
 
-public:
-	//====================================================================================================================================================================================
-	// FUNCTIONS
-	//====================================================================================================================================================================================
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void PullEvent();
 
+	void PullEndEvent();
+
+private:
+	bool IsPulled();
 };

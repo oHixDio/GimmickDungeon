@@ -2,6 +2,7 @@
 
 #include "Interfaces/InteractInterface.h"
 #include "ActorComponents/InteractableComponent.h"
+#include "UserInterfaces/PlayerHUD.h"
 
 // Sets default values for this component's properties
 UInteractableComponent::UInteractableComponent()
@@ -18,6 +19,7 @@ void UInteractableComponent::BeginPlay()
 	Super::BeginPlay();
 
 	Owner = Cast<APawn>(GetOwner());
+	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<APlayerHUD>();
 }
 
 void UInteractableComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -102,7 +104,7 @@ void UInteractableComponent::FoundInteractable(AActor* NewInteractableActor)
 	TargetInteractableActor = NewInteractableActor;
 
 	// HUD表示
-	// HUD->UpdateInteractGuide(&TargetInteractableActor->InteractableData);
+	HUD->UpdateInteractGuide(&TargetInteractableActor->InteractData);
 
 	TargetInteractableActor->BeginFocus();
 }
@@ -124,7 +126,7 @@ void UInteractableComponent::NoInteractableFound()
 			TargetInteractableActor->EndFocus();
 		}
 
-		// HUD->HideInteractGuide();
+		HUD->HideInteractGuide();
 
 		// 保持アクタを破棄
 		InteractionData.CurrentInteractableActor = nullptr;

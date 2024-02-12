@@ -22,7 +22,6 @@ struct FInteractData
 	FInteractData() :
 		InteractType(EInteractType::Pickup),
 		Name(FText::GetEmpty()),
-		Action(FText::GetEmpty()),
 		Quantity(0),
 		InteractableDuration(0.0f)
 	{
@@ -34,9 +33,6 @@ struct FInteractData
 
 	UPROPERTY(EditInstanceOnly)
 	FText Name;
-
-	UPROPERTY(EditInstanceOnly)
-	FText Action;
 
 	UPROPERTY(EditInstanceOnly)
 	int32 Quantity;
@@ -61,8 +57,6 @@ public:
 	virtual void BeginInteract();
 	virtual void Interact(AActor* InteractableActor);
 	virtual void EndInteract();
-
-	virtual EInteractType GetItemType(AActor* AActor) const;
 
 	FInteractData InteractData;
 };

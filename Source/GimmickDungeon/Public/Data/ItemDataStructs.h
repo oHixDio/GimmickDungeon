@@ -96,20 +96,20 @@ struct FItemData : public FTableRowBase
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FName ID;
-
-	UPROPERTY(EditAnywhere, Category = "Item Data")
 	EItemType ItemType;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-	EItemQuality ItemQuality;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FItemTextData ItemTextData;
+	FText Description;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FItemNumericData ItemNumericData;
+	int32 MaxStackSize;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FItemAssetData ItemAssetData;
+	UTexture2D* InventoryIcon;
+
+	UPROPERTY(EditAnywhere, Category = "Item Data")
+	TSubclassOf<AActor> SpawnableClass;
 };

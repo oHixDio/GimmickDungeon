@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
+class UItemBase;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GIMMICKDUNGEON_API UInventoryComponent : public UActorComponent
@@ -13,16 +14,35 @@ class GIMMICKDUNGEON_API UInventoryComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	//====================================================================================================================================================================================
+	// PROPERTIES & VARIABLES
+	//====================================================================================================================================================================================
+
+	//====================================================================================================================================================================================
+	// FUNCTIONS
+	//====================================================================================================================================================================================
 	UInventoryComponent();
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+protected:
+	//====================================================================================================================================================================================
+	// PROPERTIES & VARIABLES
+	//====================================================================================================================================================================================
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	TArray<TObjectPtr<UItemBase>> Contents;
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	int32 InventorySize;
+
+	// 空きがあるか調べる
+	// void FindSlot();
+	// アイテムを追加する
+	// void PushItem();
+	// アイテムを消費する
+	// void PullItem();
+	//====================================================================================================================================================================================
+	// FUNCTIONS
+	//====================================================================================================================================================================================
+	virtual void BeginPlay() override;
+
 };

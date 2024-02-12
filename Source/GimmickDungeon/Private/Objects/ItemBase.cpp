@@ -12,25 +12,12 @@ UItemBase* UItemBase::CreateItemCopy() const
 	// 新しいアイテムを作成、コピーして返却
 	UItemBase* ItemCopy = NewObject<UItemBase>(StaticClass());
 
-	ItemCopy->ID = this->ID;
-	ItemCopy->Quantity = this->Quantity;
-	ItemCopy->ItemQuality = this->ItemQuality;
-	ItemCopy->ItemType = this->ItemType;
-	ItemCopy->ItemTextData = this->ItemTextData;
-	ItemCopy->ItemNumericData = this->ItemNumericData;
-	ItemCopy->ItemAssetData = this->ItemAssetData;
+	ItemCopy->ItemData.ItemType = this->ItemData.ItemType;
+	ItemCopy->ItemData.Name = this->ItemData.Name;
+	ItemCopy->ItemData.Description = this->ItemData.Description;
+	ItemCopy->ItemData.MaxStackSize = this->ItemData.MaxStackSize;
+	ItemCopy->ItemData.InventoryIcon = this->ItemData.InventoryIcon;
+	ItemCopy->ItemData.SpawnableClass = this->ItemData.SpawnableClass;
 
 	return ItemCopy;
-}
-
-void UItemBase::SetQuantity(const int32 NewQuantity)
-{
-	if (NewQuantity != Quantity)
-	{
-		Quantity = FMath::Clamp(NewQuantity, 0, ItemNumericData.bIsStackable ? ItemNumericData.MaxStackSize : 1);
-	}
-}
-
-void UItemBase::Use()
-{
 }

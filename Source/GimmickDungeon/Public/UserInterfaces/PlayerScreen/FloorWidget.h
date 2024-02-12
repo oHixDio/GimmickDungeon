@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "CPP_UW_InventoryPanel.generated.h"
+#include "FloorWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GIMMICKDUNGEON_API UCPP_UW_InventoryPanel : public UUserWidget
+class GIMMICKDUNGEON_API UFloorWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	

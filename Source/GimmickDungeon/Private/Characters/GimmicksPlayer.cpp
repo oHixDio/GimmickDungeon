@@ -2,6 +2,7 @@
 
 #include "Characters/GimmicksPlayer.h"
 #include "ActorComponents/InteractableComponent.h"
+#include <ActorComponents/InventoryComponent.h>
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -11,7 +12,8 @@
 AGimmicksPlayer::AGimmicksPlayer()
 	:Super()
 {
-	InteractableComp = CreateDefaultSubobject<UInteractableComponent>("Interactable Component");
+	Interactable = CreateDefaultSubobject<UInteractableComponent>("Interactable Component");
+	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory Component");
 }
 
 void AGimmicksPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -19,8 +21,8 @@ void AGimmicksPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) 
 	{
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, InteractableComp, &UInteractableComponent::BeginInteract);
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, InteractableComp, &UInteractableComponent::EndInteract);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, Interactable, &UInteractableComponent::BeginInteract);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, Interactable, &UInteractableComponent::EndInteract);
 	}
 }
 

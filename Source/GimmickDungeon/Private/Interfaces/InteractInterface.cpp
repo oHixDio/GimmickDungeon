@@ -25,7 +25,3 @@ void IInteractInterface::EndInteract()
 {
 }
 
-EInteractType IInteractInterface::GetItemType(AActor* AActor) const
-{
-    return InteractData.InteractType;
-}
