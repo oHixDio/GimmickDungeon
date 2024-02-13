@@ -7,7 +7,6 @@
 #include "Components/ActorComponent.h"
 #include "ItemComponent.generated.h"
 
-class UDataTable;
 class UItemBase;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

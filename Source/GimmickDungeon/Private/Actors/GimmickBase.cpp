@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ActorComponents/ItemComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Objects/ItemBase.h"
 #include "Actors/GimmickBase.h"
 

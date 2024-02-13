@@ -12,7 +12,13 @@ struct FGimmickData
 {
 	GENERATED_USTRUCT_BODY()
 
-	FGimmickData() :bCanInteract(false), bDoOnce(false), bGimmickAccessOnly(false) {};
+	FGimmickData() :
+		bCanInteract(false),
+		bDoOnce(false),
+		bGimmickAccessOnly(false),
+		InteractDuration(0.0f),
+		JointRange(0.0f)
+	{};
 
 	UPROPERTY(EditAnywhere)
 	bool bCanInteract;
@@ -39,14 +45,7 @@ public:
 	//====================================================================================================================================================================================
 	// PROPERTIES & VARIABLES
 	//====================================================================================================================================================================================
-	UPROPERTY(EditAnywhere)
-	class UItemComponent* ItemComp;
 
-	UPROPERTY(VisibleAnywhere)
-	TArray<UPrimitiveComponent*> MeshList;
-
-	UPROPERTY(EditAnywhere)
-	FGimmickData GimmickData;
 
 	//====================================================================================================================================================================================
 	// FUNCTIONS
@@ -54,6 +53,25 @@ public:
 	AGimmickBase();
 	virtual void Tick(float DeltaTime) override;
 protected:
+	//====================================================================================================================================================================================
+	// PROPERTIES & VARIABLES
+	//====================================================================================================================================================================================
+	
+	UPROPERTY(EditAnywhere, Category = "Gimmick | Component")
+	class UItemComponent* ItemComp;
+
+	UPROPERTY(EditAnywhere, Category = "Gimmick | Component")
+	class UWidgetComponent* InteractableWidgetComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Gimmick | Component")
+	TArray<UPrimitiveComponent*> MeshList;
+
+	UPROPERTY(EditAnywhere, Category = "Gimmick | Data")
+	FGimmickData GimmickData;
+
+	//====================================================================================================================================================================================
+	// FUNCTIONS
+	//====================================================================================================================================================================================
 	virtual void BeginPlay() override;
 
 	void UpdataInteractData();
